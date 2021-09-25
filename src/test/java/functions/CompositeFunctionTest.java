@@ -21,5 +21,8 @@ public class CompositeFunctionTest {
         double testX = 0.1;
         assertEquals(num4.apply(test), 0.95122919, 0.000001);
         assertEquals(num5.apply(testX), 0.999900003, 0.000001);//SqrFunc(IdFunc(CosFunc(SqrFunc(x))))
+        assertEquals(num4.apply(Double.POSITIVE_INFINITY), Double.NaN);
+        assertEquals(num4.apply(Double.NEGATIVE_INFINITY), Double.NaN);
+        assertEquals(num4.apply(Double.NaN), Double.NaN);
     }
 }
