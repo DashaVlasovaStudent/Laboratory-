@@ -1,5 +1,5 @@
 package functions;
 
- interface MathFunction {
+interface MathFunction {
      double apply(double x);
 }
