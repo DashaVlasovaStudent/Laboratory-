@@ -99,24 +99,24 @@ public class LinkedListTabulatedFunction {
     }
 
     public int floorIndexOfX(double x) {
-        Node xX = head;
+        Node temp = head;
+        Node current = null;
         double dif = 0;
-        int minIndex = -1;
-
         for (int i = 0; i < count; i++) {
-            if (xX.x == x) return i;// возвращает номер элемента в списке, равного х
-            else {
-                dif = x - xX.x;
-                if (dif > 0) minIndex = i;
-            }
-            xX.x = xX.next.x;
+            if (temp.x == x)
+                return indexOfX(temp.x);
+            dif = x - temp.x;
+            if (dif > 0)
+                current = temp;
+            temp = temp.next;
         }
-
-        if (minIndex == -1) return 0;// мин индекс не поменялся, следовательно все числа в списке больше х
-        else{
-            if (dif>0) return count;// вернется если все меньше х
-            else return minIndex;
+        if (current == null){
+            if (dif<0)
+                return 0;
         }
+        else if (dif>0)
+            return count;
+        return  indexOfX(current.x);
 
 
     }
