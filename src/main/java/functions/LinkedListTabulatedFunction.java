@@ -3,11 +3,12 @@ package functions;
 public class LinkedListTabulatedFunction {
     protected int count;
     private Node head;
-    private Node tail;
+
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
         head = null;
         for (int i = 0; i < xValues.length; i++) {
+
             addNode(xValues[i], yValues[i]);
 
         }
@@ -23,8 +24,9 @@ public class LinkedListTabulatedFunction {
     }
 
     public boolean isEmpty() {
-        if (head == null)
+        if (head == null) {
             return true;
+        }
         return false;
     }
 
@@ -36,7 +38,7 @@ public class LinkedListTabulatedFunction {
             temp.next = temp;
             temp.prev = temp;
         } else {
-            Node tail = head.prev; // ссылка на конец списка
+            Node tail = head.prev;
             head.prev = temp;
             temp.prev = tail;
             temp.next = head;
@@ -80,7 +82,7 @@ public class LinkedListTabulatedFunction {
         getNode(index).y = value;
     }
 
-    public int indexOfX(double x) {// если не найден Х
+    public int indexOfX(double x) {
         Node temp = head;
         for (int i = 0; i < count; i++) {
             if (temp.x == x) return i;
@@ -89,7 +91,7 @@ public class LinkedListTabulatedFunction {
         return -1;
     }
 
-    public int indexOfY(double y) {// если не найден Y
+    public int indexOfY(double y) {
         Node temp = head;
         for (int i = 0; i < count; i++) {
             if (temp.y == y) return i;
@@ -103,60 +105,63 @@ public class LinkedListTabulatedFunction {
         Node current = null;
         double dif = 0;
         for (int i = 0; i < count; i++) {
-            if (temp.x == x)
+            if (temp.x == x) {
                 return indexOfX(temp.x);
+            }
             dif = x - temp.x;
-            if (dif > 0)
+            if (dif > 0) {
                 current = temp;
+            }
             temp = temp.next;
         }
-        if (current == null){
-            if (dif<0)
+        if (current == null) {
+            if (dif < 0) {
                 return 0;
-        }
-        else if (dif>0)
+            }
+        } else if (dif > 0) {
             return count;
-        return  indexOfX(current.x);
+        }
+        return indexOfX(current.x);
 
 
     }
 
     private double extrapolateLeft(double x) {
-        if (count == 1) return head.x;
-        else {
-            double tempX_ = x;// передаваемый х
+        if (count == 1) {
+            return head.x;
+        } else {
+            double tempX_ = x;
             double tempX = head.x;// x 0
             double tempX1 = head.next.x;// x 1
             double tempY = head.y;// y 0
             double tempY1 = head.next.y;// y 1
-            double tabulatedY = tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
-            return tabulatedY;
+            return tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
         }
     }
 
     private double extrapolateRight(double x) {
-        if (count == 1) return head.x;
-        else {
-            double tempX_ = x;// передаваемый х
+        if (count == 1) {
+            return head.x;
+        } else {
+            double tempX_ = x;
             double tempX = head.prev.x;// x 0
             double tempX1 = head.prev.prev.x;// x 1
             double tempY = head.prev.y;// y 0
             double tempY1 = head.prev.prev.y;// y 1
-            double tabulatedY = tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
-            return tabulatedY;
+            return tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
         }
     }
 
-    private double interpolate(double x, int floorIndex) {// передается минимальный индекс
-        if (count == 1) return head.x;
-        else {
-            double tempX_ = x;// передаваемый х
+    private double interpolate(double x, int floorIndex) {
+        if (count == 1) {
+            return head.x;
+        } else {
+            double tempX_ = x;
             double tempX = getNode(floorIndex).x;// x k-1
             double tempX1 = getNode(floorIndex + 1).x;// x k
             double tempY = getNode(floorIndex).y;// k-1 Y
             double tempY1 = getNode(floorIndex + 1).y;//k Y
-            double tabulatedY = tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
-            return tabulatedY;
+            return tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
         }
     }
 }
