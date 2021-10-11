@@ -1,8 +1,9 @@
 package functions;
 
-public class LinkedListTabulatedFunction {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     protected int count;
     private Node head;
+    private  Node tail = head.prev;
 
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
@@ -52,11 +53,54 @@ public class LinkedListTabulatedFunction {
         return count;
     }
 
+    @Override
+    public double getX(int index) {
+        return getNode(index).x;
+    }
+
+    @Override
+    public double getY(int index) {
+        return getNode(index).y;
+    }
+
+    @Override
+    public void setY(int index, double value) {
+        getNode(index).y = value;
+    }
+
+    @Override
+    public int indexOfX(double x) {
+        Node temp = head;
+        for (int i = 0; i < count; i++) {
+            if (temp.x == x) {
+                return i;
+            }
+            temp = temp.next;
+        }
+        return -1;
+    }
+
+    @Override
+    public int indexOfY(double y) {
+        Node temp = head;
+        for (int i = 0; i < count; i++) {
+            if (temp.y == y) {
+                return i;
+            }
+            temp = temp.next;
+        }
+        return -1;
+    }
+
+    @Override
     public double leftBound() {
+
         return head.x;
     }
 
+    @Override
     public double rightBound() {
+
         return head.prev.x;
     }
 
@@ -70,37 +114,32 @@ public class LinkedListTabulatedFunction {
         return value;
     }
 
-    public double getX(int index) {
-        return getNode(index).x;
-    }
-
-    public double getY(int index) {
-        return getNode(index).y;
-    }
-
-    public void setY(int index, double value) {
-        getNode(index).y = value;
-    }
-
-    public int indexOfX(double x) {
-        Node temp = head;
-        for (int i = 0; i < count; i++) {
-            if (temp.x == x) return i;
-            temp = temp.next;
+    @Override
+    protected double extrapolateLeft(double x) {
+        if (head.x == rightBound()){
+            return head.y;
         }
-        return -1;
+        return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
-    public int indexOfY(double y) {
-        Node temp = head;
-        for (int i = 0; i < count; i++) {
-            if (temp.y == y) return i;
-            temp = temp.next;
+    @Override
+    protected double extrapolateRight(double x) {
+        if (head.x == rightBound()){
+            return head.y;
         }
-        return -1;
+        return interpolate (x, tail.prev.x, tail.x, tail.prev.y, tail.y);
     }
 
-    public int floorIndexOfX(double x) {
+    @Override
+    protected double interpolate(double x, int floorIndex) {
+        if (head.x == tail.x){
+            return head.y;
+        }
+        return interpolate(x, getNode(floorIndex).x, getNode(floorIndex).next.x, getNode(floorIndex).y, getNode(floorIndex).next.x );
+    }
+
+    @Override
+    protected int floorIndexOfX(double x) {
         Node temp = head;
         Node current = null;
         double dif = 0;
@@ -125,44 +164,4 @@ public class LinkedListTabulatedFunction {
 
 
     }
-
-    private double extrapolateLeft(double x) {
-        if (count == 1) {
-            return head.x;
-        } else {
-            double tempX_ = x;
-            double tempX = head.x;// x 0
-            double tempX1 = head.next.x;// x 1
-            double tempY = head.y;// y 0
-            double tempY1 = head.next.y;// y 1
-            return tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
-        }
-    }
-
-    private double extrapolateRight(double x) {
-        if (count == 1) {
-            return head.x;
-        } else {
-            double tempX_ = x;
-            double tempX = head.prev.x;// x 0
-            double tempX1 = head.prev.prev.x;// x 1
-            double tempY = head.prev.y;// y 0
-            double tempY1 = head.prev.prev.y;// y 1
-            return tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
-        }
-    }
-
-    private double interpolate(double x, int floorIndex) {
-        if (count == 1) {
-            return head.x;
-        } else {
-            double tempX_ = x;
-            double tempX = getNode(floorIndex).x;// x k-1
-            double tempX1 = getNode(floorIndex + 1).x;// x k
-            double tempY = getNode(floorIndex).y;// k-1 Y
-            double tempY1 = getNode(floorIndex + 1).y;//k Y
-            return tempY + ((tempY1 - tempY) * (tempX_ - tempX)) / (tempX1 - tempX);
-        }
-    }
 }
-
