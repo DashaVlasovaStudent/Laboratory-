@@ -83,4 +83,62 @@ public class LinkedListTabulatedFunctionTest {
 
 
     }
+
+
+    MathFunction id = new IdentityFunction();
+    MathFunction zero = new ZeroFunction();
+    MathFunction sqr = new SqrFunction();
+    MathFunction cos = new CosFunction();
+
+
+
+    private LinkedListTabulatedFunction function1() {
+        return new LinkedListTabulatedFunction(id, 3,57,10);
+    }
+
+    private LinkedListTabulatedFunction function2(){
+        return new LinkedListTabulatedFunction(zero, 21, 50,8);
+    }
+
+    private LinkedListTabulatedFunction function3(){
+        return new LinkedListTabulatedFunction(sqr, 20, 500,20);
+    }
+
+    private LinkedListTabulatedFunction function4(){
+        return new LinkedListTabulatedFunction(cos, 0, 20, 8);
+    }
+
+
+
+    @Test
+    public void applyTest(){
+        MathFunction firstFunc = function1();
+        MathFunction secondFunc = function2();
+        MathFunction thirdFunc = function3();
+        MathFunction fourthFunc = function4();
+
+        CompositeFunction cosSqr = new CompositeFunction(cos, sqr);
+        CompositeFunction idSqr = new CompositeFunction(id, sqr);
+        CompositeFunction sqrZero = new CompositeFunction(sqr, zero);
+
+
+        assertEquals(cosSqr.apply((Math.PI)/3), 0.25, 0.00000000000001);
+        assertEquals(cosSqr.apply((Math.PI)/2), 0.0, 0.00000000000001);
+        assertEquals(cosSqr.apply(100), 0.7435938375035028, 0.00000000000001);// cos принимает значения в радианах
+
+        assertEquals(idSqr.apply(10), 100.0, 0.00000000000001);
+        assertEquals(idSqr.apply(0), 0.0, 0.00000000000001);
+        assertEquals(idSqr.apply(Double.POSITIVE_INFINITY), Double.POSITIVE_INFINITY, 0.00000000000001);
+        assertEquals(idSqr.apply(Double.NEGATIVE_INFINITY), Double.POSITIVE_INFINITY, 0.00000000000001);
+        assertEquals(idSqr.apply(Double.NaN), Double.NaN, 0.00000000000001);
+
+        assertEquals(sqrZero.apply(10), 0.0, 0.00000000000001);
+        assertEquals(sqrZero.apply(Double.NEGATIVE_INFINITY), 0.0, 0.00000000000001);
+
+
+
+
+
+
+    }
 }

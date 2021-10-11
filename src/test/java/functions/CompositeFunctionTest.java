@@ -15,14 +15,15 @@ public class CompositeFunctionTest {
         CompositeFunction Func1 = new CompositeFunction(SqrFunc, CosFunc);
         CompositeFunction Func2 = new CompositeFunction(IdFunc, SqrFunc);
 
-        CompositeFunction num4 = new CompositeFunction(SqrFunc, CosFunc);
-        CompositeFunction num5 = new CompositeFunction(Func1, Func2);
+        CompositeFunction num = new CompositeFunction(SqrFunc, CosFunc);
+        CompositeFunction num1 = new CompositeFunction(Func1, Func2);
         double test = 0.56;
         double testX = 0.1;
-        assertEquals(num4.apply(test), 0.95122919, 0.000001);
-        assertEquals(num5.apply(testX), 0.999900003, 0.000001);//SqrFunc(IdFunc(CosFunc(SqrFunc(x))))
-        assertEquals(num4.apply(Double.POSITIVE_INFINITY), Double.NaN);
-        assertEquals(num4.apply(Double.NEGATIVE_INFINITY), Double.NaN);
-        assertEquals(num4.apply(Double.NaN), Double.NaN);
+        assertEquals(num.apply(test), 0.95122919, 0.000001);
+        assertEquals(num1.apply(testX), 0.999900003, 0.000001);//SqrFunc(IdFunc(CosFunc(SqrFunc(x))))
+        assertEquals(num.apply(Double.POSITIVE_INFINITY), Double.NaN);
+        assertEquals(num.apply(Double.NEGATIVE_INFINITY), Double.NaN);
+        assertEquals(num.apply(Double.NaN), Double.NaN);
     }
+
 }

@@ -14,7 +14,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     protected abstract int floorIndexOfX(double x);
 
-    @Override
+
     public double apply(double x) {
         if (x < leftBound()) {
             return extrapolateLeft(x);
