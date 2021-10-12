@@ -8,25 +8,24 @@ public class LinkedListTabulatedFunctionTest {
     public MathFunction id = new IdentityFunction();
     public MathFunction zero = new ZeroFunction();
     public MathFunction sqr = new SqrFunction();
-    public MathFunction cos = new CosFunction();
 
-    private LinkedListTabulatedFunction createFunctionFromIdentity() {
+    private TabulatedFunction createFunctionFromIdentity() {
         return new LinkedListTabulatedFunction(id, 1, 100, 100);
     }
 
-    private LinkedListTabulatedFunction createFunctionFromZero() {
+    private TabulatedFunction createFunctionFromZero() {
         return new LinkedListTabulatedFunction(zero, 1, 100, 100);
     }
 
-    private LinkedListTabulatedFunction createFunctionFromSqr() {
-        return new LinkedListTabulatedFunction(sqr, 1, 500, 20);
+    private TabulatedFunction createFunctionFromSqr() {
+        return new LinkedListTabulatedFunction(sqr, 25, 100, 76);
     }
 
     @Test
     public void testGetCount() {
 
         MathFunction cos = new CosFunction();
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(cos, 2, 6, 15);
+        TabulatedFunction link = new LinkedListTabulatedFunction(cos, 2, 6, 15);
 
         assertEquals(link.getCount(), 15);
 
@@ -35,14 +34,14 @@ public class LinkedListTabulatedFunctionTest {
     @Test
     public void testLeftBound() {
         MathFunction cos = new CosFunction();
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(cos, 2, 6, 15);
+        TabulatedFunction link = new LinkedListTabulatedFunction(cos, 2, 6, 15);
         assertEquals(link.leftBound(), 2.0, 0.0001);
     }
 
     @Test
     public void testRightBound() {
         MathFunction cos = new CosFunction();
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(cos, 2, 6, 15);
+        TabulatedFunction link = new LinkedListTabulatedFunction(cos, 2, 6, 15);
         assertEquals(link.rightBound(), 6.0, 0.0001);
     }
 
@@ -51,7 +50,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] xValues = {0, 3, 6, 7};
         double[] yValues = {1, 4, 7, 8};
 
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
+        TabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
 
         assertEquals(link.getX(0), 0.0, 0.0001);
         assertEquals(link.getX(1), 3.0, 0.0001);
@@ -64,7 +63,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] xValues = {0, 3, 6, 7};
         double[] yValues = {1, 4, 7, 8};
 
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
+        TabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
 
         assertEquals(link.getY(0), 1.0, 0.0001);
         assertEquals(link.getY(1), 4.0, 0.0001);
@@ -76,7 +75,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testSetY() {
         double[] xValues = {0, 3, 6, 7};
         double[] yValues = {1, 4, 7, 8};
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
+        TabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
         link.setY(1, 8.0);
         assertEquals(link.getY(1), 8.0, 0.0001);
     }
@@ -85,7 +84,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testIndexOfX() {
         double[] xValues = {0, 3, 6, 7};
         double[] yValues = {1, 4, 7, 8};
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
+        TabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
         assertEquals(link.indexOfX(800), -1);
     }
 
@@ -93,7 +92,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testIndexOfY() {
         double[] xValues = {0, 3, 6, 7};
         double[] yValues = {1, 4, 7, 8};
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
+        TabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
         assertEquals(link.indexOfY(800), -1);
     }
 
@@ -101,7 +100,7 @@ public class LinkedListTabulatedFunctionTest {
     public void testFloorIndexOfX() {
         double[] xValues = {10, 15, 17, 20};
         double[] yValues = {1, 4, 7, 8};
-        LinkedListTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
+        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
         assertEquals(link.floorIndexOfX(6.9), 0);// x меньше всех элементов
         assertEquals(link.floorIndexOfX(800.9), 4);// х больше всех элементов
         assertEquals(link.floorIndexOfX(13.2), 0);
@@ -110,8 +109,8 @@ public class LinkedListTabulatedFunctionTest {
     @Test
     public void applyTest() {
 
-        CompositeFunction idSqr = new CompositeFunction(createFunctionFromIdentity(), sqr);
-        CompositeFunction sqrZero = new CompositeFunction(sqr, createFunctionFromZero());
+        MathFunction idSqr = new CompositeFunction(createFunctionFromIdentity(), sqr);
+        MathFunction sqrZero = new CompositeFunction(sqr, createFunctionFromZero());
 
         assertEquals(idSqr.apply(0.5), 0.25, 0.0001);
         assertEquals(idSqr.apply(-10), 100.0, 0.0001);
@@ -119,5 +118,16 @@ public class LinkedListTabulatedFunctionTest {
 
         assertEquals(sqrZero.apply(10), 0.0, 0.0001);
         assertEquals(sqrZero.apply(-10), 0.0, 0.0001);
+
+    }
+
+    @Test
+    public void tabulatedFunctionTest(){
+        MathFunction sqrFunction = createFunctionFromSqr();
+
+        assertEquals(sqrFunction.apply(30), 900.0, 0.0001);//x  внутри интервала и совпадает с одним их значений
+        assertEquals(sqrFunction.apply(29.5), 870.5, 0.0001);// х внутри и между двумя значениями
+        assertEquals(sqrFunction.apply(5), -395, 0.0001);// х левее
+        assertEquals(sqrFunction.apply(120), 13980, 0.0001);// х правее
     }
 }
