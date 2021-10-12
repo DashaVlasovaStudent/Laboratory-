@@ -1,17 +1,13 @@
 package functions;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
-    protected int count;
+    private int count;
     private Node head;
-
-
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
         head = null;
         for (int i = 0; i < xValues.length; i++) {
-
             addNode(xValues[i], yValues[i]);
-
         }
     }
 
@@ -25,14 +21,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public boolean isEmpty() {
-        if (head == null) {
-            return true;
-        }
-        return false;
+        return head == null;
     }
 
     private void addNode(double x, double y) {
-
         Node temp = new Node(x, y);
         if (isEmpty()) {
             head = temp;
@@ -46,7 +38,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             tail.next = temp;
         }
         count++;
-
     }
 
     public int getCount() {
@@ -91,47 +82,43 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public double leftBound() {
-
         return head.x;
     }
 
     public double rightBound() {
-
         return head.prev.x;
     }
 
     private Node getNode(int index) {
-        Node other = head;// ссылка на следующее значениев списке после value
-        Node value = null;// значение, которое хотим получить
+        Node current = head;
         for (int i = 0; i < index; i++) {
-            other = other.next;
-            value = other;
+            current = current.next;
         }
-        return value;
+        return current;
     }
 
     protected double extrapolateLeft(double x) {
-        if (head.x == head.prev.x){
+        if (head.x == head.prev.x) {
             return head.x;
         }
         return super.interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
     protected double extrapolateRight(double x) {
-        if (head.x == head.prev.x){
+        if (head.x == head.prev.x) {
             return head.x;
         }
-        return super.interpolate (x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
+        return super.interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
     protected double interpolate(double x, int floorIndex) {
-        if (head.x == head.prev.x){
+        if (head.x == head.prev.x) {
             return head.x;
         }
         Node left = getNode(floorIndex);
         Node right = getNode(floorIndex).next;
 
-        return super.interpolate(x, left.x, right.x, left.y, right.y );
+        return super.interpolate(x, left.x, right.x, left.y, right.y);
     }
 
     protected int floorIndexOfX(double x) {
@@ -158,18 +145,5 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         return indexOfX(current.x);
 
 
-    }
-
-    public double apply(double x) {
-        if (x < leftBound()) {
-            return extrapolateLeft(x);
-        }
-        if (x > rightBound()){
-            return extrapolateRight(x);
-        }
-        if (indexOfX(x) != -1){
-            return getY(indexOfX(x));
-        }
-        return  interpolate(x, floorIndexOfX(x));
     }
 }

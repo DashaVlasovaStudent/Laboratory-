@@ -10,10 +10,10 @@ public class UnitFunctionTest {
     public void testUnitFunction() {
         UnitFunction num8 = new UnitFunction();
         double test1 = 8.7;
-        assertEquals(num8.apply(test1), 1.0, 0.0000000001);
-        assertEquals(num8.apply(3.14), 1.0, 0.0000000001);
-        assertEquals(num8.apply(Double.POSITIVE_INFINITY), 1.0, 0.000000000001);
-        assertEquals(num8.apply(Double.NEGATIVE_INFINITY), 1.0, 0.00000000001);
-        assertEquals(num8.apply(Double.NaN), 1.0, 0.0000000000000001);
+        assertEquals(num8.apply(test1), 1.0, 0.0001);
+        assertEquals(num8.apply(3.14), 1.0, 0.0001);
+        assertEquals(num8.apply(Double.POSITIVE_INFINITY), 1.0, 0.0001);
+        assertEquals(num8.apply(Double.NEGATIVE_INFINITY), 1.0, 0.0001);
+        assertEquals(num8.apply(Double.NaN), 1.0, 0.0001);
     }
 }
