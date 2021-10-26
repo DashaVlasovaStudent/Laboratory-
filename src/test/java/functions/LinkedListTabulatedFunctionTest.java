@@ -5,9 +5,9 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class LinkedListTabulatedFunctionTest {
-    public MathFunction id = new IdentityFunction();
-    public MathFunction zero = new ZeroFunction();
-    public MathFunction sqr = new SqrFunction();
+    private final MathFunction id = new IdentityFunction();
+    private final MathFunction zero = new ZeroFunction();
+    private final MathFunction sqr = new SqrFunction();
 
     private TabulatedFunction createFunctionFromIdentity() {
         return new LinkedListTabulatedFunction(id, 1, 100, 100);
