@@ -1,5 +1,7 @@
 package functions;
 
+import exceptions.InterpolationException;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private int count;
     private Node head;
@@ -124,8 +126,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     protected double interpolate(double x, int floorIndex) {
         Node left = getNode(floorIndex);
         Node right = getNode(floorIndex).next;
+        if (x < left.x || x > right.x){
+            throw new InterpolationException();
+        }
 
-        return super.interpolate(x, left.x, right.x, left.y, right.y);
+            return super.interpolate(x, left.x, right.x, left.y, right.y);
     }
 
     protected int floorIndexOfX(double x) {

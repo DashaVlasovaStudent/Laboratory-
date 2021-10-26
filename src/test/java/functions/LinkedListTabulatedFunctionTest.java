@@ -1,5 +1,6 @@
 package functions;
 
+import exceptions.InterpolationException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -140,5 +141,15 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(sqrFunction.apply(29.5), 870.5, 0.0001);// х внутри и между двумя значениями
         assertEquals(sqrFunction.apply(5), -395, 0.0001);// х левее
         assertEquals(sqrFunction.apply(120), 13980, 0.0001);// х правее
+    }
+
+    @Test
+    public void interpolateTest(){
+        MathFunction function = new SqrFunction();
+        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(function, 1, 10,10);
+
+        Assert.assertThrows(InterpolationException.class, () -> link.interpolate(5.5, 5));
+        Assert.assertThrows(InterpolationException.class, () -> link.interpolate(6.9, 6));
+
     }
 }
