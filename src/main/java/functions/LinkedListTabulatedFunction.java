@@ -3,6 +3,7 @@ package functions;
 import exceptions.InterpolationException;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private int count;
@@ -128,11 +129,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     protected double interpolate(double x, int floorIndex) {
         Node left = getNode(floorIndex);
         Node right = getNode(floorIndex).next;
-        if (x < left.x || x > right.x){
+        if (x < left.x || x > right.x) {
             throw new InterpolationException();
         }
 
-            return super.interpolate(x, left.x, right.x, left.y, right.y);
+        return super.interpolate(x, left.x, right.x, left.y, right.y);
     }
 
     protected int floorIndexOfX(double x) {
@@ -176,7 +177,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         }
     }
 
-    public Iterator<Point> iterator(){
-        throw new UnsupportedOperationException();
+    public Iterator<Point> iterator() {
+        return new Iterator<>() {
+            Node node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Point point = new Point((node.x), node.y);
+                if (node == head.prev) {
+                    node = null;
+                } else {
+                    node = node.next;
+                }
+                return point;
+            }
+        };
     }
 }

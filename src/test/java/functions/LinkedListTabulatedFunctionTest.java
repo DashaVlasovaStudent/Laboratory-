@@ -88,7 +88,7 @@ public class LinkedListTabulatedFunctionTest {
 
         assertEquals(link.getY(1), 8.0, 0.0001);
 
-        Assert.assertThrows(IllegalArgumentException.class, () -> link.setY(-100,10));
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.setY(-100, 10));
         Assert.assertThrows(IllegalArgumentException.class, () -> link.setY(100, 73));
     }
 
@@ -111,7 +111,7 @@ public class LinkedListTabulatedFunctionTest {
     @Test
     public void testFloorIndexOfX() {
         MathFunction function = new SqrFunction();
-        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(function, 1, 10,10);
+        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(function, 1, 10, 10);
         assertEquals(link.floorIndexOfX(10.0), 9);
 
         Assert.assertThrows(IllegalArgumentException.class, () -> link.floorIndexOfX(-100));
@@ -134,7 +134,7 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    public void tabulatedFunctionTest(){
+    public void tabulatedFunctionTest() {
         MathFunction sqrFunction = createFunctionFromSqr();
 
         assertEquals(sqrFunction.apply(30), 900.0, 0.0001);//x  внутри интервала и совпадает с одним их значений
@@ -144,12 +144,24 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    public void interpolateTest(){
+    public void interpolateTest() {
         MathFunction function = new SqrFunction();
-        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(function, 1, 10,10);
+        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(function, 1, 10, 10);
 
         Assert.assertThrows(InterpolationException.class, () -> link.interpolate(5.5, 5));
         Assert.assertThrows(InterpolationException.class, () -> link.interpolate(6.9, 6));
 
+    }
+
+    @Test
+    public void iteratorForEachTest() {
+        TabulatedFunction function = createFunctionFromSqr();
+
+        int i = 0;
+        int j = 0;
+        for (Point point : function){
+            assertEquals(point.x, function.getX(i++), 0.0001);
+            assertEquals(point.y, function.getY(j++), 0.0001);
+        }
     }
 }
