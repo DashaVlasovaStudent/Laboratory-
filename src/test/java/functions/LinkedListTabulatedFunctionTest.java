@@ -1,5 +1,6 @@
 package functions;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -56,6 +57,9 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(link.getX(1), 3.0, 0.0001);
         assertEquals(link.getX(2), 6.0, 0.0001);
         assertEquals(link.getX(3), 7.0, 0.0001);
+
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.getX(-100));
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.getX(100));
     }
 
     @Test
@@ -69,6 +73,9 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(link.getY(1), 4.0, 0.0001);
         assertEquals(link.getY(2), 7.0, 0.0001);
         assertEquals(link.getY(3), 8.0, 0.0001);
+
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.getY(-100));
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.getY(100));
     }
 
     @Test
@@ -77,7 +84,11 @@ public class LinkedListTabulatedFunctionTest {
         double[] yValues = {1, 4, 7, 8};
         TabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
         link.setY(1, 8.0);
+
         assertEquals(link.getY(1), 8.0, 0.0001);
+
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.setY(-100,10));
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.setY(100, 73));
     }
 
     @Test
@@ -98,12 +109,12 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testFloorIndexOfX() {
-        double[] xValues = {10, 15, 17, 20};
-        double[] yValues = {1, 4, 7, 8};
-        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(xValues, yValues);
-        assertEquals(link.floorIndexOfX(6.9), 0);// x меньше всех элементов
-        assertEquals(link.floorIndexOfX(800.9), 4);// х больше всех элементов
-        assertEquals(link.floorIndexOfX(13.2), 0);
+        MathFunction function = new SqrFunction();
+        AbstractTabulatedFunction link = new LinkedListTabulatedFunction(function, 1, 10,10);
+        assertEquals(link.floorIndexOfX(10.0), 9);
+
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.floorIndexOfX(-100));
+        Assert.assertThrows(IllegalArgumentException.class, () -> link.floorIndexOfX(-10));
     }
 
     @Test
