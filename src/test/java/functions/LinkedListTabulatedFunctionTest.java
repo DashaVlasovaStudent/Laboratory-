@@ -48,7 +48,7 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    public void testGetX() {// не использовать для нулевого элемента
+    public void testGetX() {
         double[] xValues = {0, 3, 6, 7};
         double[] yValues = {1, 4, 7, 8};
 
