@@ -27,4 +27,15 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         return interpolate(x, floorIndexOfX(x));
     }
 
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.getClass().getSimpleName()).append(" size = ").append(this.getCount()).append("\n");
+
+        for (Point point : this) {
+            builder.append("[").append(point.x).append("; ").append(point.y).append("]\n");
+        }
+        return builder.toString();
+    }
+
+
 }
