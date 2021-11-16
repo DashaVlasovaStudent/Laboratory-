@@ -10,6 +10,10 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 
 public final class FunctionsIO {
+    static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException{
+        return (TabulatedFunction) new ObjectInputStream(stream).readObject();
+    }
+
     private FunctionsIO(){
         throw new UnsupportedOperationException();
     }
