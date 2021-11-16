@@ -10,8 +10,14 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 
 public final class FunctionsIO {
-    static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException{
+
+    public static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException{
         return (TabulatedFunction) new ObjectInputStream(stream).readObject();
+    }
+    public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException{
+        ObjectOutputStream outputStream = new ObjectOutputStream(stream);
+        outputStream.writeObject(function);
+        outputStream.flush();
     }
 
     private FunctionsIO(){
