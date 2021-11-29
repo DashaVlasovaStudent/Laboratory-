@@ -10,38 +10,42 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 
 public final class FunctionsIO {
+    private FunctionsIO() {
+        throw new UnsupportedOperationException();
+    }
 
-    public static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException{
+    public static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException {
         return (TabulatedFunction) new ObjectInputStream(stream).readObject();
     }
-    public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException{
+
+    public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException {
         ObjectOutputStream outputStream = new ObjectOutputStream(stream);
         outputStream.writeObject(function);
         outputStream.flush();
     }
 
-    private FunctionsIO(){
-        throw new UnsupportedOperationException();
-    }
-    static void writeTabulatedFunction (BufferedOutputStream outputStream, TabulatedFunction function) throws IOException{
+
+    public static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
         DataOutputStream outputStream1 = new DataOutputStream(outputStream);
         int count = function.getCount();
         outputStream1.writeInt(count);
-        for (Point point : function){
+        for (Point point : function) {
             outputStream1.writeDouble(point.x);
             outputStream1.writeDouble(point.y);
         }
+        outputStream1.flush();
     }
-    static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException{
+
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
         DataInputStream inStream = new DataInputStream(inputStream);
-        int count = inStream.readInt();
+        int count = inStream.read();
 
         double[] xValues = new double[count];
         double[] yValues = new double[count];
 
-        for (int i=0; i<inStream.readInt(); i++ ){
-            xValues[i]= inStream.readDouble();
-            yValues[i]= inStream.readDouble();
+        for (int i = 0; i < count; i++) {
+            xValues[i] = inStream.readDouble();
+            yValues[i] = inStream.readDouble();
         }
         return factory.create(xValues, yValues);
     }

@@ -18,10 +18,12 @@ public class TabulatedDifferentialOperatorTest {
 
         TabulatedFunctionFactory listFactory = new LinkedListTabulatedFunctionFactory();
         TabulatedFunction listFunction = listFactory.create(xValues, yValues);
-
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(listFactory);
+        TabulatedFunction listFunctionAfterDerive = operator.derive(listFunction);
+        Assert.assertTrue (listFunctionAfterDerive instanceof LinkedListTabulatedFunction);
         for (int i = 0; i < xValues.length; i++) {
-            Assert.assertEquals(listFunction.getX(i), (double) i + 1);
-            Assert.assertEquals(listFunction.getY(i), (double) i + 4);
+            Assert.assertEquals(listFunction.getX(i), (double) (i + 1));
+            Assert.assertEquals(listFunctionAfterDerive.getY(i), (double) 1);
         }
     }
 }

@@ -4,10 +4,15 @@ import exceptions.InconsistentFunctionsException;
 import functions.Point;
 import functions.TabulatedFunction;
 import functions.factory.LinkedListTabulatedFunctionFactory;
+import functions.factory.TabulatedFunctionFactory;
 
 public class TabulatedFunctionOperationService {
 
     private LinkedListTabulatedFunctionFactory factory;
+
+    public TabulatedFunctionOperationService(TabulatedFunctionFactory factory) {
+        this.factory = (LinkedListTabulatedFunctionFactory) factory;
+    }
 
     public static Point[] asPoints(TabulatedFunction tabulatedFunction) {
         Point[] points = new Point[tabulatedFunction.getCount()];
@@ -44,7 +49,7 @@ public class TabulatedFunctionOperationService {
     }
 
     public TabulatedFunction sum(TabulatedFunction firstFunc, TabulatedFunction secondFunc) {
-        return doOperator(firstFunc, secondFunc, Double::sum);
+        return doOperator(firstFunc, secondFunc, (first, second) -> first + second);
     }
 
     public TabulatedFunction subtract(TabulatedFunction firstFunc, TabulatedFunction secondFunc) {

@@ -15,6 +15,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     private Node head;
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        if (xValues.length < 2){
+            throw new IllegalArgumentException("недопустимая длина массива");
+        }
         head = null;
         for (int i = 0; i < xValues.length; i++) {
             addNode(xValues[i], yValues[i]);
@@ -114,7 +117,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private Node getNode(int index) {
         if (index < 0 | index >= count) {
-            throw new IllegalArgumentException("неправильный индекс!!");
+            throw new IndexOutOfBoundsException("неправильный индекс!!");
         }
         Node current = head;
         for (int i = 0; i < index; i++) {
@@ -170,7 +173,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     }
 
-    public static class Node {
+    public static class Node implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 6319341255706397616L;
         public Node next;
         public Node prev;
         public double x;

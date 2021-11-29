@@ -19,8 +19,8 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
     @Override
     public TabulatedFunction derive(TabulatedFunction function) {
-        TabulatedFunctionOperationService servicePoint = new TabulatedFunctionOperationService();
-        Point[] points = servicePoint.asPoints(function);
+        Point[] points = TabulatedFunctionOperationService.asPoints(function);
+
         double[] xValues = new double[points.length];
         double[] yValues = new double[points.length];
 

@@ -1,8 +1,14 @@
 package functions;
 
 import exceptions.InterpolationException;
+import operations.TabulatedFunctionOperationService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import javax.swing.text.html.HTMLDocument;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.testng.Assert.*;
 
@@ -21,6 +27,12 @@ public class LinkedListTabulatedFunctionTest {
 
     private TabulatedFunction createFunctionFromSqr() {
         return new LinkedListTabulatedFunction(sqr, 25, 100, 76);
+    }
+
+    @Test
+    public void LinkedListTabulatedFunctionTest1() {
+        MathFunction sqr = new SqrFunction();
+        Assert.assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(sqr, 100, 10, 10));
     }
 
     @Test
@@ -155,13 +167,26 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void iteratorForEachTest() {
-        TabulatedFunction function = createFunctionFromSqr();
-
+        SqrFunction sqr = new SqrFunction();
+        TabulatedFunction function = new LinkedListTabulatedFunction(sqr, 1, 10, 10);
+        Point[] points = TabulatedFunctionOperationService.asPoints(function);
         int i = 0;
-        int j = 0;
-        for (Point point : function){
-            assertEquals(point.x, function.getX(i++), 0.0001);
-            assertEquals(point.y, function.getY(j++), 0.0001);
+        for (Point point : points) {
+            Assert.assertEquals(point.x, function.getX(i), 0.0001);
+            Assert.assertEquals(point.y, function.getY(i++), 0.0001);
         }
+        Assert.assertEquals(i, function.getCount());
+
+        Iterator<Point> iterator = function.iterator();
+
+        i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(point.x, function.getX(i), 0.0001);
+            assertEquals(point.y, function.getY(i), 0.0001);
+            i++;
+        }
+        Assert.assertThrows(NoSuchElementException.class, iterator::next);
+        Assert.assertEquals(i, 10);
     }
 }
