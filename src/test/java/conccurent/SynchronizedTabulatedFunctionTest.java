@@ -72,7 +72,24 @@ public class SynchronizedTabulatedFunctionTest {
 
     @Test
     public void testIterator() {
+        SynchronizedTabulatedFunction sync = new SynchronizedTabulatedFunction(new LinkedListTabulatedFunction(x, y), obj);
+        Iterator<Point> iterator = sync.iterator();
 
+        int i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            Assert.assertEquals(sync.getX(i), point.x);
+            Assert.assertEquals(sync.getY(i++), point.y);
+        }
+        Assert.assertEquals(sync.getCount(), i);
+        Assert.assertThrows(NoSuchElementException.class, iterator::next);
+
+        i=0;
+        for (Point point: sync){
+            Assert.assertEquals(sync.getX(i), point.x);
+            Assert.assertEquals(sync.getY(i++), point.y);
+        }
+        Assert.assertEquals(sync.getCount(), i);
     }
 
     @Test
