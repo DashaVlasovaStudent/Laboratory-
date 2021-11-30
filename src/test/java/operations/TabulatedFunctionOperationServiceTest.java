@@ -44,6 +44,7 @@ public class TabulatedFunctionOperationServiceTest {
         Assert.assertEquals(res.getY(0),  8.0);
         Assert.assertEquals(res.getY(1),  10.0);
         Assert.assertEquals(res.getY(2),  12.0);
+        Assert.assertTrue(res instanceof LinkedListTabulatedFunction);
 
     }
     @Test
@@ -62,6 +63,7 @@ public class TabulatedFunctionOperationServiceTest {
         Assert.assertEquals(res.getY(0),  0.0);
         Assert.assertEquals(res.getY(1),  0.0);
         Assert.assertEquals(res.getY(2),  0.0);
+        Assert.assertTrue(res instanceof LinkedListTabulatedFunction);
 
     }
 }

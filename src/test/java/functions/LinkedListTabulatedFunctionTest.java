@@ -30,9 +30,16 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    public void LinkedListTabulatedFunctionTest1() {
-        MathFunction sqr = new SqrFunction();
+    public void LinkedListTabulatedFunctionTest2() {
+        MathFunction sqr = createFunctionFromSqr();
         Assert.assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(sqr, 100, 10, 10));
+    }
+
+    @Test
+    public void LinkedListTabulatedFunctionTest1() {
+        double[] xValues = {0};
+        double[] yValues = {1};
+        Assert.assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(xValues, yValues));
     }
 
     @Test
