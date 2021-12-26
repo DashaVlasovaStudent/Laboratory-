@@ -4,7 +4,6 @@ import functions.Point;
 import functions.TabulatedFunction;
 import functions.factory.TabulatedFunctionFactory;
 
-import java.awt.*;
 import java.io.*;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;

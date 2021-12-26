@@ -15,6 +15,7 @@ public class LinkedListTabulatedFunctionSerialization {
         LinkedListTabulatedFunction linkedListTabulatedFunction = new LinkedListTabulatedFunction(xValues, yValues);
         TabulatedFunction linkedListDifferentialOnceFunction = difOperator.derive(linkedListTabulatedFunction);
         TabulatedFunction linkedListDifferentialTwiceFunction = difOperator.derive(linkedListDifferentialOnceFunction);
+
         try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(//
                  "output/serialized linked list functions.bin"))) {
             FunctionsIO.serialize(outputStream, linkedListTabulatedFunction);
@@ -23,6 +24,7 @@ public class LinkedListTabulatedFunctionSerialization {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(//
                 "output/serialized linked list functions.bin"))){
             TabulatedFunction func = FunctionsIO.deserialize(inputStream);
