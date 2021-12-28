@@ -10,30 +10,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateFromFunctionWindow extends JDialog {
-    private final JLabel label1 = new JLabel("Enter the number of points:");
-    private final JLabel label2 = new JLabel("From");
+    private final JLabel label1 = new JLabel("Enter the quantity of points:");
+    private final JLabel label2 = new JLabel("from");
     private final JLabel label3 = new JLabel("to");
 
     private final JTextField textField1 = new JTextField("");
     private final JTextField textField2 = new JTextField("");
     private final JTextField textField3 = new JTextField("");
 
-    private final JComboBox<String> comboBox = new JComboBox<>(new String[]
-            {
-                    "Constant function", "Cos function", "Identity function", "Sqr function", "Unit function", "Zero Function"
-            });
+    private final JComboBox<String> comboBox = new JComboBox<>(new String[]{
+            "Constant function", "Cos function", "Identity function", "Sqr function", "Unit function", "Zero function"
+    });
+    private final JButton createButton = new JButton("Create");
 
-    private final JButton create = new JButton("Create");
     private TabulatedFunction function;
     private final TabulatedFunctionFactory factory;
 
     public CreateFromFunctionWindow(TabulatedFunctionFactory factory) {
         this.factory = factory;
+
         setModal(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(new FlowLayout());
-        setSize(400, 180);
-        create.setFocusPainted(false);
+        setSize(400, 200);
+        createButton.setFocusPainted(false);
 
         addButtonListeners();
         compose();
@@ -47,12 +47,12 @@ public class CreateFromFunctionWindow extends JDialog {
 
     private void createFunction() {
         Map<String, MathFunction> functionsMap = new HashMap<>();
-        functionsMap.put("Constant Function", new ConstantFunction(2));
+        functionsMap.put("Constant function", new ConstantFunction(3));
         functionsMap.put("Cos function", new CosFunction());
-        functionsMap.put("Identity Function", new IdentityFunction());
-        functionsMap.put("Sqr Function", new SqrFunction());
-        functionsMap.put("Unit Function", new UnitFunction());
-        functionsMap.put("Zero Function", new ZeroFunction());
+        functionsMap.put("Identity function", new IdentityFunction());
+        functionsMap.put("Sqr function", new SqrFunction());
+        functionsMap.put("Unit function", new UnitFunction());
+        functionsMap.put("Zero function", new ZeroFunction());
 
         String functionName = (String) comboBox.getSelectedItem();
         MathFunction selectedFunction = functionsMap.get(functionName);
@@ -61,16 +61,15 @@ public class CreateFromFunctionWindow extends JDialog {
         int count = Integer.parseInt(textField1.getText());
 
         function = factory.create(selectedFunction, from, to, count);
-        //Table tableFunction = new Table()
         System.out.println(function);
     }
 
     private void addButtonListeners() {
-        create.addActionListener(e -> {
+        createButton.addActionListener(e -> {
             try {
                 int size = Integer.parseInt(textField1.getText());
                 if (size <= 0) {
-                    Exceptions.showMessage("Enter positive number");
+                    Exceptions.showMessage("Enter the positive number");
                 }
                 createFunction();
                 dispose();
@@ -84,10 +83,6 @@ public class CreateFromFunctionWindow extends JDialog {
 
     private void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
-        textField1.setSize(new Dimension(50, 10));
-        textField2.setSize(new Dimension(50, 10));
-        textField3.setSize(new Dimension(50, 10));
-
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
@@ -102,7 +97,7 @@ public class CreateFromFunctionWindow extends JDialog {
                         .addComponent(label3)
                         .addComponent(textField3))
                 .addComponent(comboBox)
-                .addComponent(create)
+                .addComponent(createButton)
         );
 
         layout.setVerticalGroup(layout.createSequentialGroup()
@@ -115,7 +110,7 @@ public class CreateFromFunctionWindow extends JDialog {
                         .addComponent(label3)
                         .addComponent(textField3))
                 .addComponent(comboBox)
-                .addComponent(create)
+                .addComponent(createButton)
         );
     }
 

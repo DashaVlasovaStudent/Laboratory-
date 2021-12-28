@@ -1,5 +1,6 @@
 package ui;
 
+
 import javax.swing.table.AbstractTableModel;
 import java.io.Serial;
 import java.util.List;

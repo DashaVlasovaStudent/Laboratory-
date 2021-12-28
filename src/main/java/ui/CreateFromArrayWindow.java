@@ -111,7 +111,7 @@ public class CreateFromArrayWindow extends JDialog {
                 int size = xValues.size();
                 double[] x = new double[size];
                 double[] y = new double[size];
-                for (int i = 0; i != size; i++) {
+                for (int i = 0; i < size; i++) {
                     x[i] = Double.parseDouble(xValues.get(i));
                     y[i] = Double.parseDouble(yValues.get(i));
                 }

@@ -8,7 +8,7 @@ import functions.factory.TabulatedFunctionFactory;
 
 public class TabulatedFunctionOperationService {
 
-    private LinkedListTabulatedFunctionFactory factory;
+    private final LinkedListTabulatedFunctionFactory factory;
 
     public TabulatedFunctionOperationService(TabulatedFunctionFactory factory) {
         this.factory = (LinkedListTabulatedFunctionFactory) factory;
