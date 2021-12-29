@@ -54,6 +54,14 @@ public class Derive extends JDialog {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
+        getContentPane().setBackground(Color.YELLOW);
+
+        createButton.setBackground(Color.ORANGE);
+        createButton.setForeground(Color.DARK_GRAY);
+
+        resultButton.setBackground(Color.ORANGE);
+        resultButton.setForeground(Color.DARK_GRAY);
+
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
@@ -105,7 +113,7 @@ public class Derive extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    JPopupMenu popupMenu = new JPopupMenu();
+
                     JMenuItem fromTable = new JMenuItem("from the table");
                     JMenuItem fromFunction = new JMenuItem("from the function");
 
@@ -119,6 +127,7 @@ public class Derive extends JDialog {
                         setTable(window.getFunction());
                     });
 
+                    JPopupMenu popupMenu = new JPopupMenu();
                     popupMenu.add(fromTable);
                     popupMenu.addSeparator();
                     popupMenu.add(fromFunction);

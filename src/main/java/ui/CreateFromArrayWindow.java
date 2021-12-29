@@ -31,11 +31,12 @@ public class CreateFromArrayWindow extends JDialog {
     private final TabulatedFunctionFactory factory;
 
     public CreateFromArrayWindow(TabulatedFunctionFactory factory) {
+        setTitle("Creating function from array");
         this.factory = factory;
 
         setModal(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setLayout(new FlowLayout());
+        setLayout(new GridLayout());
         setSize(500, 300);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -52,9 +53,23 @@ public class CreateFromArrayWindow extends JDialog {
     private void compose() {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         JScrollPane tableScrollPane = new JScrollPane(table);
+
+        getContentPane().setBackground(Color.YELLOW);
+
+        label.setFont(new Font("Consolas", Font.BOLD, 15));
+        label.setForeground(Color.DARK_GRAY);
+        label.setVerticalAlignment(JLabel.TOP);
+
+        addButton.setBackground(Color.orange);
+        addButton.setForeground(Color.DARK_GRAY);
+
+        createButton.setBackground(Color.orange);
+        createButton.setForeground(Color.DARK_GRAY);
+
+        clearButton.setBackground(Color.orange);
+        clearButton.setForeground(Color.DARK_GRAY);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
@@ -115,7 +130,7 @@ public class CreateFromArrayWindow extends JDialog {
                     x[i] = Double.parseDouble(xValues.get(i));
                     y[i] = Double.parseDouble(yValues.get(i));
                 }
-                function =  factory.create(x, y);
+                function = factory.create(x, y);
                 System.out.println(function);
                 dispose();
             } catch (NumberFormatException exp) {
@@ -128,7 +143,7 @@ public class CreateFromArrayWindow extends JDialog {
         });
 
         clearButton.addActionListener(e -> {
-            int flag = JOptionPane.showConfirmDialog(null, "Are you sure? Area will be clear", "Warning", JOptionPane.YES_NO_OPTION);
+            int flag = JOptionPane.showConfirmDialog(null, "Are you sure? Area will be clear", "Warning", JOptionPane.YES_NO_CANCEL_OPTION);
             if (flag == 0) {
                 int size = xValues.size();
                 xValues.clear();

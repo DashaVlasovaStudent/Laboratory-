@@ -21,6 +21,7 @@ public class MainWindow extends JFrame {
     private final JFileChooser fileChooser = new JFileChooser();
     private final TabulatedFunctionFactory tabulatedFunctionFactory = new LinkedListTabulatedFunctionFactory();
     private TabulatedFunction tabulatedFunction;
+    ImageIcon icon = new ImageIcon("src/бараш.png");
 
 
     public MainWindow() {
@@ -35,6 +36,7 @@ public class MainWindow extends JFrame {
         addButtonListeners();
 
         setLocationRelativeTo(null);
+        setIconImage(icon.getImage());
         setVisible(true);
     }
 
@@ -44,6 +46,28 @@ public class MainWindow extends JFrame {
 
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
+        getContentPane().setBackground(Color.DARK_GRAY);
+
+        arrayButton.setBackground(Color.LIGHT_GRAY);
+        arrayButton.setForeground(Color.BLACK);
+
+        buttonTabulatedFunction.setBackground(Color.LIGHT_GRAY);
+        buttonTabulatedFunction.setForeground(Color.BLACK);
+
+        operationButton.setBackground(Color.LIGHT_GRAY);
+        operationButton.setForeground(Color.BLACK);
+
+        settingsButton.setBackground(Color.LIGHT_GRAY);
+        settingsButton.setForeground(Color.BLACK);
+
+        deriveButton.setBackground(Color.LIGHT_GRAY);
+        deriveButton.setForeground(Color.BLACK);
+
+        uploadFunction.setBackground(Color.LIGHT_GRAY);
+        uploadFunction.setForeground(Color.BLACK);
+
+        saveFunction.setBackground(Color.LIGHT_GRAY);
+        saveFunction.setForeground(Color.BLACK);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()

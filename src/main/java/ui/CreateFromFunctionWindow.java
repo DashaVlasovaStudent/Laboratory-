@@ -27,14 +27,14 @@ public class CreateFromFunctionWindow extends JDialog {
     private final TabulatedFunctionFactory factory;
 
     public CreateFromFunctionWindow(TabulatedFunctionFactory factory) {
+        setTitle("Creating function from function");
         this.factory = factory;
 
-        setModal(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(new FlowLayout());
         setSize(400, 200);
-        createButton.setFocusPainted(false);
 
+        setModal(true);
         addButtonListeners();
         compose();
         setLocationRelativeTo(null);
@@ -75,8 +75,6 @@ public class CreateFromFunctionWindow extends JDialog {
                 dispose();
             } catch (NumberFormatException exp) {
                 Exceptions.showMessage("Enter integer");
-            } catch (IllegalArgumentException exp) {
-                Exceptions.showMessage(exp.getMessage());
             }
         });
     }
@@ -86,6 +84,19 @@ public class CreateFromFunctionWindow extends JDialog {
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
+        getContentPane().setBackground(Color.blue);
+
+        label1.setFont(new Font("Consolas", Font.CENTER_BASELINE, 15));
+        label1.setForeground(Color.CYAN);
+        label1.setVerticalAlignment(JLabel.TOP);
+
+        label2.setFont(new Font("Consolas", Font.CENTER_BASELINE, 15));
+        label2.setForeground(Color.CYAN);
+        label2.setVerticalAlignment(JLabel.TOP);
+
+        label3.setFont(new Font("Consolas", Font.CENTER_BASELINE, 15));
+        label3.setForeground(Color.CYAN);
+        label3.setVerticalAlignment(JLabel.TOP);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()

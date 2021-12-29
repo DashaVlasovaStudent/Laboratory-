@@ -68,6 +68,17 @@ public class Operations extends JDialog {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
+        getContentPane().setBackground(Color.YELLOW);
+
+        createButton.setBackground(Color.orange);
+        createButton.setForeground(Color.DARK_GRAY);
+
+        createButtonTwo.setBackground(Color.orange);
+        createButtonTwo.setForeground(Color.DARK_GRAY);
+
+        resultButton.setBackground(Color.orange);
+        resultButton.setForeground(Color.DARK_GRAY);
+
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 

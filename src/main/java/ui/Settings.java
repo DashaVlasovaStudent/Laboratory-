@@ -18,6 +18,7 @@ public class Settings extends JDialog {
         setLayout(new FlowLayout());
         setSize(320, 200);
 
+
         tabbedPane.setPreferredSize(new Dimension(300, 300));
         JPanel factorySelection = new Panel();
         tabbedPane.addTab("Factories", factorySelection);
