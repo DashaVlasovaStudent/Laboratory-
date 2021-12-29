@@ -86,15 +86,15 @@ public class CreateFromFunctionWindow extends JDialog {
         layout.setAutoCreateContainerGaps(true);
         getContentPane().setBackground(Color.blue);
 
-        label1.setFont(new Font("Consolas", Font.CENTER_BASELINE, 15));
+        label1.setFont(new Font("Consolas", Font.BOLD, 15));
         label1.setForeground(Color.CYAN);
         label1.setVerticalAlignment(JLabel.TOP);
 
-        label2.setFont(new Font("Consolas", Font.CENTER_BASELINE, 15));
+        label2.setFont(new Font("Consolas", Font.BOLD, 15));
         label2.setForeground(Color.CYAN);
         label2.setVerticalAlignment(JLabel.TOP);
 
-        label3.setFont(new Font("Consolas", Font.CENTER_BASELINE, 15));
+        label3.setFont(new Font("Consolas", Font.BOLD, 15));
         label3.setForeground(Color.CYAN);
         label3.setVerticalAlignment(JLabel.TOP);
 
